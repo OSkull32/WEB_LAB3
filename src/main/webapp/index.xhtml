@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+>
+<h:head>
+    <title>Лабораторная работа №3</title>
+    <meta name="author" content="Danchenko Vladimir"/>
+    <h:outputStylesheet name="styles/style_index.css"/>
+    <h:outputScript library="scripts" name="clock.js"/>
+</h:head>
+<h:body>
+    <nav>
+        <div class="logo">Данченко Владимир P3234. Вариант 4444</div>
+        <div class="nav-items">
+            <h:link outcome="toIndex">Home</h:link>
+            <a href="https://t.me/O_skull32">About me</a> <a href="https://github.com/OSkull32">Code</a>
+        </div>
+    </nav>
+    <div class="clockpage">
+        <div id="clock"></div>
+        <div id="dayOfWeek"></div>
+    </div>
+    <section class="hero">
+        <div class="hero-container">
+            <div class="column-left">
+                <h1>Здесь вы сможете проверить точку на попадание в заданную область!</h1>
+                <h:button class="start_button" outcome="toMain" value="Проверить"/>
+            </div>
+            <div class="column-right">
+                <img
+                        src="resources/images/image.jpg"
+                        alt="illustration"
+                        class="hero-image"
+                />
+            </div>
+        </div>
+    </section>
+</h:body>
+</html>

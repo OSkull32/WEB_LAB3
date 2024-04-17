@@ -1,0 +1,183 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://java.sun.com/jsf/core"
+>
+<h:head>
+    <meta charset="utf-8"/>
+    <meta name="author" content="Danchenko Vladimir"/>
+
+    <title>Лабораторная работа №3</title>
+    <h:outputScript library="scripts" name="canvas.js"/>
+    <h:outputScript library="scripts" name="clickManager.js"/>
+    <h:outputScript library="scripts" name="validator.js"/>
+    <h:outputStylesheet library="styles" name="style_main.css"/>
+    <h:outputScript src="https://code.jquery.com/jquery-3.6.0.min.js"/>
+
+</h:head>
+<h:body onload="firstUpdateList()">
+    <nav>
+        <div class="logo">Данченко Владимир P3234. Вариант 4444</div>
+        <div class="nav-items">
+            <h:link outcome="toIndex">Home</h:link>
+            <a href="https://t.me/O_skull32">About me</a> <a href="https://github.com/OSkull32">Code</a>
+        </div>
+    </nav>
+    <div id="data-container">
+        <h:form id="form">
+            <div id="X">
+                Выберите X [-4; 4]:
+                <br/>
+                <div id="x-button-div">
+                    <h:commandButton value="-4" action="#{dotBean.dot.setX(-4)}" styleClass="x-button">
+                        <f:ajax/>
+                    </h:commandButton>
+                    <h:commandButton value="-3" action="#{dotBean.dot.setX(-3)}" styleClass="x-button">
+                        <f:ajax/>
+                    </h:commandButton>
+                    <h:commandButton value="-2" action="#{dotBean.dot.setX(-2)}" styleClass="x-button">
+                        <f:ajax/>
+                    </h:commandButton>
+                    <h:commandButton value="-1" action="#{dotBean.dot.setX(-1)}" styleClass="x-button">
+                        <f:ajax/>
+                    </h:commandButton>
+                    <h:commandButton value="0" action="#{dotBean.dot.setX(0)}" styleClass="x-button active">
+                        <f:ajax/>
+                    </h:commandButton>
+                    <h:commandButton value="1" action="#{dotBean.dot.setX(1)}" styleClass="x-button">
+                        <f:ajax/>
+                    </h:commandButton>
+                    <h:commandButton value="2" action="#{dotBean.dot.setX(2)}" styleClass="x-button">
+                        <f:ajax/>
+                    </h:commandButton>
+                    <h:commandButton value="3" action="#{dotBean.dot.setX(3)}" styleClass="x-button">
+                        <f:ajax/>
+                    </h:commandButton>
+                    <h:commandButton value="4" action="#{dotBean.dot.setX(4)}" styleClass="x-button">
+                        <f:ajax/>
+                    </h:commandButton>
+                </div>
+            </div>
+            <div id="Y">
+                Введите Y [-5; 5]:
+                <br/>
+                <h:inputText id="Y-value" styleClass="y-value" value="#{dotBean.dot.y}" required="true"
+                             requiredMessage="Введите Y" validatorMessage="Не входит в [-5..5]"
+                             converterMessage="Введите число" maxlength="7">
+                    <f:validateDoubleRange minimum="-5" maximum="5"/>
+                    <f:ajax render="Y-value-message"/>
+                </h:inputText>
+                <h:message id="Y-value-message" for="Y-value" styleClass="error"/>
+            </div>
+            <div id="R">
+                Введите R [2; 5]:
+                <br/>
+                <h:inputText id="R-value" styleClass="r-value" value="#{dotBean.dot.r}" required="true"
+                             requiredMessage="Введите R" validatorMessage="Не входит в [2..5]"
+                             converterMessage="Введите число" maxlength="7">>
+                    <f:validateDoubleRange minimum="2" maximum="5"/>
+                    <f:ajax render="R-value-message"/>
+                </h:inputText>
+                <h:message id="R-value-message" for="R-value" styleClass="error"/>
+            </div>
+        </h:form>
+        <div class="canvas-form">
+            <canvas id="canvas" width="400px" height="400px"></canvas>
+        </div>
+    </div>
+    <div id="validation-info" class="validationInfo"></div>
+    <div id="button-container">
+        <h:commandButton type="submit" id="check" styleClass="pointer button" value="Проверить"
+                         action="#{dotBean.add()}">
+            <f:ajax render="results myForm"/>
+        </h:commandButton>
+        <h:commandButton type="button" id="clear" styleClass="pointer button" value="Очистить"
+                         action="#{dotBean.clear()}">
+            <f:ajax render="results myForm"/>
+        </h:commandButton>
+    </div>
+    <h:panelGroup layout="block" id="table-container">
+        <h:dataTable styleClass="table" id="results" var="dot" value="#{dotBean.dotsList}">
+            <h:column styleClass="table-value">
+                <f:facet name="header">X</f:facet>
+                <h:outputText id="x" value="#{dot.x}"/>
+            </h:column>
+            <h:column styleClass="table-value">
+                <f:facet name="header">Y</f:facet>
+                <h:outputText id="y" value="#{dot.y}"/>
+            </h:column>
+            <h:column styleClass="table-value">
+                <f:facet name="header">R</f:facet>
+                <h:outputText id="r" value="#{dot.r}"/>
+            </h:column>
+            <h:column styleClass="table-value">
+                <f:facet name="header">Текущее время</f:facet>
+                <h:outputText id="time" value="#{dot.time}"/>
+            </h:column>
+            <h:column styleClass="table-value">
+                <f:facet name="header">Время работы (мкс)</f:facet>
+                <h:outputText id="script-time" value="#{dot.scriptTime}"/>
+            </h:column>
+            <h:column styleClass="table-value">
+                <f:facet name="header">Результат</f:facet>
+                <h:outputText id="status" value="#{dot.status}"/>
+            </h:column>
+        </h:dataTable>
+    </h:panelGroup>
+
+    <h:form id="myForm">
+        <h:inputHidden id="xValue" value="#{dotBean.dot.x}">
+        </h:inputHidden>
+        <h:inputHidden id="yValue" value="#{dotBean.dot.y}">
+        </h:inputHidden>
+        <h:inputHidden id="dots" value="#{dotBean.dotsList == null ? 0 : dotBean.dotsJson}">
+        </h:inputHidden>
+        <h:inputHidden id="rValue" value="#{dotBean.dot.r}">
+        </h:inputHidden>
+    </h:form>
+
+    <h:outputScript type="text/javascript">
+        function firstUpdateList() {
+            let pointsJson = document.getElementById(&apos;myForm:dots&apos;).value;
+            let rValue = document.getElementById(&apos;myForm:rValue&apos;).value;
+            let points = JSON.parse(pointsJson);
+            draw(rValue, points);
+        }
+    </h:outputScript>
+
+    <h:outputScript type="text/javascript">
+        function sendData(x,y, r) {
+            document.getElementById('myForm:xValue').value = x;
+            document.getElementById('myForm:yValue').value = y;
+            document.getElementById('myForm:rValue').value = r;
+
+            faces.ajax.request('myForm', null, {
+                execute: 'myForm',
+                render: 'results',
+                onevent: function (data) {
+                    if (data.status === 'success') {
+                        document.getElementById('check').click();
+                        setTimeout(function() {
+                            firstUpdateList();
+                        }, 200);
+
+                    }
+                }
+            });
+        }
+        document.getElementById("clear").addEventListener("click",function () {
+            setTimeout(function() {
+                firstUpdateList();
+            }, 200);
+        });
+        document.getElementById("check").addEventListener("click",function () {
+            setTimeout(function() {
+                firstUpdateList();
+            }, 200);
+        });
+    </h:outputScript>
+</h:body>
+</html>
