@@ -47,4 +47,11 @@
         </war>
         <delete dir="${dir.build}/war"/>
     </target>
+
+
+    <target name="xml">
+        <xmlvalidate failonerror="true" lenient="true">
+            <fileset dir="${dir.src}" includes="**/*.xml"/>
+        </xmlvalidate>
+    </target>
 </project>
