@@ -1,0 +1,15 @@
+<project>
+    <!--    properties-->
+    <property name="dir.src" location="src"/>
+    <property name="dir.build" location=".build"/>
+    <property name="dir.classes" location="${dir.build}/classes"/>
+    <property name="dir.lib" value="lib"/>
+    <property name="dir.main" location="${dir.src}/main"/>
+    <property name="dir.resources" location="${dir.main}/resources"/>
+    <property name="dir.webapp" location="${dir.main}/webapp"/>
+
+    <!--    constants-->
+    <property name="project.name" value="OPI_LAB_3"/>
+    <property name="project.version" value="1.0"/>
+
+</project>
