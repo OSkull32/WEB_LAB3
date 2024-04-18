@@ -30,3 +30,9 @@ dependencies {
     compileOnly('org.projectlombok:lombok:1.18.26')
     annotationProcessor('org.projectlombok:lombok:1.18.26')
 }
+
+//task that takes all the files that would be in the war file, but copies them into a folder instead of creating the war
+task explodedWar(type: Sync) {
+    into "${buildDir}/exploded"
+    with war
+}

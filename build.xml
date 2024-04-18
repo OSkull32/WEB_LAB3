@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<project default="compile">
+    <import file="properties.xml"/>
+
+<!--    path to libraries directory-->
+    <path id="classpath">
+        <fileset dir="${dir.lib}" includes="*.jar"/>
+    </path>
+
+
+<!--    targets-->
+    <target name="clean">
+        <delete dir="${dir.build}"/>
+    </target>
+
+
+    <target name="init">
+        <mkdir dir="${dir.build}"/>
+        <mkdir dir="${dir.classes}"/>
+    </target>
+
+
+    <target name="compile" depends="init">
+        <javac srcdir="${dir.src}" destdir="${dir.classes}" classpathref="classpath"/>
+    </target>
+
+
+    <target name="jar" depends="compile">
+        <jar destfile="${dir.build}/${project.name}_${project.version}.jar">
+            <fileset dir="${dir.classes}"/>
+            <fileset dir="${dir.webapp}"/>
+            <fileset dir="${dir.resources}"/>
+        </jar>
+    </target>
+
+
+    <target name="war" depends="compile">
+        <mkdir dir="${dir.build}/war"/>
+        <copy todir="${dir.build}/war" overwrite="true">
+            <fileset dir="${dir.resources}"/>
+            <fileset dir="${dir.classes}"/>
+        </copy>
+        <war destfile="${dir.build}/${project.name}_${project.version}.war" webxml="${dir.webapp}/WEB-INF/web.xml">
+            <fileset dir="${dir.webapp}" excludes="WEB-INF/web.xml"/>
+            <lib dir="${dir.lib}"/>
+            <classes dir="${dir.build}/war"/>
+        </war>
+        <delete dir="${dir.build}/war"/>
+    </target>
+
+
+    <target name="xml">
+        <xmlvalidate failonerror="true" lenient="true">
+            <fileset dir="${dir.src}" includes="**/*.xml"/>
+        </xmlvalidate>
+    </target>
+</project>
